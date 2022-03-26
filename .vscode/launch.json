@@ -12,9 +12,9 @@
         },
         {
             "type": "java",
-            "name": "Launch App",
+            "name": "Launch PasswordEncryption",
             "request": "launch",
-            "mainClass": "App",
+            "mainClass": "PasswordEncryption",
             "projectName": "passwordEncryption_74b0592d",
             "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-17.0.1/lib\" --add-modules javafx.controls,javafx.fxml"
         }
