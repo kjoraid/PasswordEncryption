@@ -4,11 +4,11 @@ import javax.crypto.spec.SecretKeySpec;
 /*
     This class is responsible of:
     A) Encrypt data passed by Array by following these steps: 
-        1- Check if the array is has data
+        1- Check if the array is having  data
         2- Call the Encrypt class to encrypt the data
         3- Return the array with encrypted details
     B) Decrypt data passed by an Array by following these steps:
-        1- Check if the array is has data
+        1- Check if the array is having  data
         2- Call the Decrypt class to encrypt the data
         3- Return the array with Decrypted details
 */

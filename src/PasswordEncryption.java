@@ -23,8 +23,8 @@ import javafx.stage.Stage;
 /*
     This class contains Main and Start methods to be used 
     to design JFX screen.
-    Work on start method and use the appropreate FX objects to design 
-    a screen that accepts data from user accourding to the design and
+    Work on start method and use the appropriate  FX objects to design 
+    a screen that accepts data from user according  to the design and
     follow these actions:
     A) Save the data into array: 
         1- Each time user insert/delete new line, 
@@ -35,19 +35,19 @@ import javafx.stage.Stage;
     B) Each button should be processed as following:
         1- When User Click on Open File button:
             1.1 Call a method to open the file
-            1.2 This method will return an array with data from the filw
+            1.2 This method will return an array with data from the file
             1.3 Check the data and then call the method to display the Array content 
         2- When user click on Clear Screen:
-            2.1 Confim from user
+            2.1 Confirm from user
             2.2 Clear the array
-            2.3 Call the method to cear the screen 
+            2.3 Call the method to clear the screen 
         3- When User Click on Encrypt/Decrypt button
             3.1 Call the Encrypt method and pass the Array of data to it
-            3.2 The method will return an array with Encrypt/Decrypt daya
+            3.2 The method will return an array with Encrypt/Decrypt data
             4.2 Call the method to display this table on screen
         4- When User Click on Save button
             4.1 Call the Save method and pass the array to it
-            4.1 Confirm to the user that the system save the file
+            4.1 Confirm to the user that the system saves the file
             4.3 Show the file name on the text field
 */
 

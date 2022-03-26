@@ -8,7 +8,7 @@ import java.util.Date;
     A) Open a file and retrieve the data to the caller by following 
     these steps: 
         1- Call the open class to Open a file in any folder
-        2- Ceck if the file is correct
+        2- Check if the file is correct
         3- Fill the data of the file into Array
         4- Return this array to the caller using return command
     B) Users will send an array to a method in this class to 
