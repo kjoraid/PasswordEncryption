@@ -1,23 +1,16 @@
 
  
-import java.util.ArrayList;
 import java.util.Date;
-
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
  
 /*
@@ -57,6 +50,10 @@ public class PasswordEncryption extends Application {
     private String fileName="";
     // Declaring Two Dimentional Array to store only 5 lines of data
     private String [][] passwordData = new String[5][4];
+    private TextField [][] textFields = new TextField[5][4];
+    
+    public String myEncrypttext="";
+
 
     public static void main(String[] args) {
         //System.out.println(args);
@@ -65,74 +62,161 @@ public class PasswordEncryption extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        /*
-            Step-1: Set title for the parameter(Stage)
-            Step-2: 
-                Create Button object
-                Set text for the button
-                set action for the button
-                override handle method
-            Step-3
-                Define a root from StackPan
-                add button to the root using getChildren.add method
-            Step-4
-                Stage.setScene(new scene(root, 250, 250))
-                Stage.show()
-        */
-        // This is only a test of calling a method in OpenSave class
         OpenSave opensave = new OpenSave();
-        String fileName = opensave.saveFile(date, passwordData, "");
-
-        // This is only a test of calling a method in EncryptDecrypt class
-        EncryptDecrypt ed = new EncryptDecrypt();
-        try {
-            String myEncrypttext = ed.encrypt("Password", "k123");
-            System.out.println(myEncrypttext);
-            String myDecrypttext = ed.decrypt(myEncrypttext, "k123");
-            System.out.println(myDecrypttext);
-        } catch (Exception e) {
-        // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-
+        EncryptDecrypt ED = new EncryptDecrypt();
+        final String secretKey = "ABCDEFGHIJKLMNOP";
 
         // The following code is standard and it should be removed or updated
-        primaryStage.setTitle("Hello World!");
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.TOP_CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25,50,50,25));
+        // First Label and Text Field
  
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!"+ event);
-            }
-        });
+        Label lblFile = new Label("File Name");
+        TextField txtFile = new TextField();
+        VBox hbheader = new VBox(5);
+        hbheader.setAlignment(Pos.TOP_LEFT);
+        hbheader.getChildren().addAll(lblFile, txtFile); 
+        grid.add(hbheader,1,0);
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        primaryStage.setScene(new Scene(root, 300, 250));
+        // Table Header
+        Label lblPwd = new Label("User ID");
+        Label lblNote = new Label("Password");
+        Label lblUsedIn = new Label("URL");
+        Label lblEncrypt = new Label("Notes");
+        HBox hbtable = new HBox(125);
+        hbheader.setAlignment(Pos.CENTER);
+        hbtable.getChildren().addAll(lblPwd,lblNote,lblUsedIn,lblEncrypt); 
+        grid.add(hbtable,1,2);
+        
+         // First row
+        HBox hbRow01 = new HBox(10);
+        hbRow01.setAlignment(Pos.CENTER);
+        for (int i=0;i<4;i++){
+            textFields[0][i] = new TextField();
+            hbRow01.getChildren().add(textFields[0][i]);
+        }
+        //textFields[0][3].setDisable(true);
+        grid.add(hbRow01,1,3);
+
+        // Second row
+        HBox hbRow02 = new HBox(10);
+        hbRow02.setAlignment(Pos.CENTER);
+        for (int i=0;i<4;i++){
+            textFields[1][i] = new TextField();
+            hbRow02.getChildren().add(textFields[1][i]);
+        }
+        //textFields[1][3].setDisable(true);
+        grid.add(hbRow02,1,4);
+
+        // Third row
+        HBox hbRow03 = new HBox(10);
+        hbRow03.setAlignment(Pos.CENTER);
+        for (int i=0;i<4;i++){
+            textFields[2][i] = new TextField();
+            hbRow03.getChildren().add(textFields[2][i]);
+        }
+        //textFields[2][3].setDisable(true);
+        grid.add(hbRow03,1,5);
+
+        // Fourth row
+        HBox hbRow04 = new HBox(10);
+        hbRow04.setAlignment(Pos.CENTER);
+        for (int i=0;i<4;i++){
+            textFields[3][i] = new TextField();
+            hbRow04.getChildren().add(textFields[3][i]);
+        }
+        //textFields[3][3].setDisable(true);
+        grid.add(hbRow04,1,6);
+
+
+        // Fourth row
+        HBox hbRow05 = new HBox(10);
+        hbRow05.setAlignment(Pos.CENTER);
+        for (int i=0;i<4;i++){
+            textFields[4][i] = new TextField();
+            hbRow05.getChildren().add(textFields[4][i]);
+        }
+        //textFields[4][3].setDisable(true);
+        grid.add(hbRow05,1,7);
+
+
+        Button btnOpen = new Button("Open");
+        Button btnClear = new Button("Clear");
+        Button btnSave = new Button("Save");
+        btnOpen.setPrefWidth(150);
+        btnSave.setPrefWidth(150);
+        btnClear.setPrefWidth(150);
+        
+        // Add all buttons into HBOX
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_CENTER);
+        hbBtn.getChildren().addAll(btnOpen, btnSave, btnClear); 
+        grid.add(hbBtn,1,8);
+
+        // System Messages Textbox
+        Label lblMessage = new Label("System Messages");
+        TextField txtMessage = new TextField();
+        txtMessage.setDisable(true);
+        VBox btnheader = new VBox(5);
+        btnheader.setAlignment(Pos.BOTTOM_LEFT);
+        btnheader.getChildren().addAll(lblMessage, txtMessage); 
+        grid.add(btnheader,1,9);
+        
+        primaryStage.setTitle("Password Encryption");
+        Scene scene = new Scene(grid, 650, 400);
+        primaryStage.setScene(scene);
         primaryStage.show();
+        
 
-        // ----
-        Stage secondStage = new Stage();
-        secondStage.setTitle("Second Window");
-        Button btn2 = new Button();
-        btn2.setText("Say 'Second Button'");
-        btn2.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Second Button");
-            }
+        // Event handler
+        btnOpen.setOnAction(e-> { try {
+            txtFile.setText(
+            opensave.ChooseFile(primaryStage));
+            passwordData = opensave.openFile(txtFile.getText());
+            for (int i=0;i<5;i++)
+            for (int j=0;j<4;j++){
+                passwordData[i][j] = ED.decrypt(passwordData[i][j], secretKey);
+                textFields[i][j].setText(passwordData[i][j]);}
+            txtMessage.setText("");
+        } catch (Exception e1) {
+            txtMessage.setText(e1.toString());
+        }  
+        });
+        btnSave.setOnAction(e-> { try {
+                setPassworData(textFields);
+                for (int i=0;i<5;i++)
+                for (int j=0; j<4;j++)
+                    passwordData[i][j] = ED.encrypt(passwordData[i][j], secretKey);
+                opensave.saveFile(date, getPassworData(), txtFile.getText());
+                ClearScreen();
+                txtFile.setText("");
+                txtMessage.setText("");
+        } catch (Exception e1) {
+           
+            txtMessage.setText(e1.toString()+" "+"Please enter the file name");
+        }  
+        });
+        btnClear.setOnAction(e-> { try {
+            ClearScreen();
+            txtFile.setText("");
+            txtMessage.setText("");
+        } catch (Exception e1) {
+            txtMessage.setText(e1.toString());
+        }  
         });
         
-        StackPane root1 = new StackPane();
-        root1.getChildren().add(btn2);
-        secondStage.setScene(new Scene(root1, 500, 350));
-        secondStage.show();
     }
-
+    public void ClearScreen() {
+        for (int i=0;i<5;i++)
+        for (int j=0; j<4;j++){
+            textFields[i][j].setText("");
+            this.passwordData[i][j]=textFields[i][j].getText();
+        }
+        
+    }
     public Date getDate() {
         return date;
     }
@@ -150,15 +234,16 @@ public class PasswordEncryption extends Application {
     }
 
     public String[][] getPassworData() {
+        
         return passwordData;
     }
 
-    public void setPassworData(String[][] passwordData) {
-        this.passwordData = passwordData;
-    }
-
-
-    
+    public void setPassworData(TextField[][] textFields) {
+        for (int i=0;i<5;i++)
+        for (int j=0;j<4;j++){
+            this.passwordData[i][j]=textFields[i][j].getText();
+        }
+    }    
 }
 
 

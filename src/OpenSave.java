@@ -1,7 +1,13 @@
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.Date;
+import java.util.Scanner;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 /*
     This class is responsible of:
@@ -19,28 +25,67 @@ import java.util.Date;
 
 */
 public class OpenSave {
-    //PasswordEncryption pe = new PasswordEncryption();
+    private String fileName="";
 
-    public String[][] openFile(String fileName) {
+    public String[][] openFile(String fileName) throws Exception{
         String[][] passData = new String[5][4];
+        File dataFile = new File(fileName);
+        try (Scanner inputFile = new Scanner(dataFile)) {
+            for (int i=0;i<passData.length;i++)
+                for (int j=0;j<passData[0].length;j++)         
+                    passData[i][j]= inputFile.nextLine();
+
+        } catch (FileNotFoundException e) {
+            throw new Exception(e);
+        }
+
         return passData;
     }
 
-    public String saveFile(Date date, String[][] passData, String fileName) {
-        File output = new File("output.txt");
-        FileWriter writer;
+    public String saveFile(Date date, String[][] passData, String fileName) throws Exception {
+        File output = new File(fileName);
+        PrintWriter writer;
         try {
-            writer = new FileWriter(output);
-       
-            writer.write("This is how to write a text in a file ");
+            writer = new PrintWriter(output);
+            for (int i=0;i<passData.length;i++)
+                for (int j=0;j<passData[0].length;j++){
+                    writer.println(passData[i][j]);
+                    }
+                    //writer.println("");
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new Exception(e);
         }
-        
         return fileName;
+    }
+
+    public String ChooseFile(Stage primaryStage)  throws Exception{
+        String fileName = "";
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Encryption Text File");
+            fileChooser.getExtensionFilters().addAll(
+                    new ExtensionFilter("Text Files", "*.txt"));
+            String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+            fileChooser.setInitialDirectory(new File(currentPath));
+            File selectedFile = fileChooser.showOpenDialog(primaryStage);
+            if (selectedFile != null) {
+                fileName = selectedFile.getName();
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        return fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     
