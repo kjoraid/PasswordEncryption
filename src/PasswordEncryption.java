@@ -144,16 +144,16 @@ public class PasswordEncryption extends Application {
 
 
         Button btnOpen = new Button("Open");
-        Button btnClear = new Button("Clear");
+        Button btnNew = new Button("New");
         Button btnSave = new Button("Save");
-        btnOpen.setPrefWidth(150);
-        btnSave.setPrefWidth(150);
-        btnClear.setPrefWidth(150);
+        btnOpen.setPrefWidth(200);
+        btnSave.setPrefWidth(200);
+        btnNew.setPrefWidth(200);
         
         // Add all buttons into HBOX
-        HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-        hbBtn.getChildren().addAll(btnOpen, btnSave, btnClear); 
+        HBox hbBtn = new HBox(35);
+        hbBtn.setAlignment(Pos.BASELINE_LEFT);
+        hbBtn.getChildren().addAll(btnOpen, btnSave, btnNew); 
         grid.add(hbBtn,1,8);
 
         // System Messages Textbox
@@ -165,6 +165,7 @@ public class PasswordEncryption extends Application {
         btnheader.getChildren().addAll(lblMessage, txtMessage); 
         grid.add(btnheader,1,9);
         
+        // Primary Stage
         primaryStage.setTitle("Password Encryption");
         Scene scene = new Scene(grid, 650, 400);
         primaryStage.setScene(scene);
@@ -191,18 +192,17 @@ public class PasswordEncryption extends Application {
                 for (int j=0; j<4;j++)
                     passwordData[i][j] = ED.encrypt(passwordData[i][j], secretKey);
                 opensave.saveFile(date, getPassworData(), txtFile.getText());
-                ClearScreen();
-                txtFile.setText("");
-                txtMessage.setText("");
+                txtMessage.setText("The file, "+txtFile.getText()+", is saved successfully");
         } catch (Exception e1) {
            
             txtMessage.setText(e1.toString()+" "+"Please enter the file name");
         }  
         });
-        btnClear.setOnAction(e-> { try {
+        btnNew.setOnAction(e-> { try {
             ClearScreen();
             txtFile.setText("");
             txtMessage.setText("");
+            txtFile.requestFocus();;
         } catch (Exception e1) {
             txtMessage.setText(e1.toString());
         }  
