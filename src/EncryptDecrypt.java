@@ -8,14 +8,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 /*
     This class is responsible of:
-    A) Encrypt data passed by Array by following these steps: 
-        1- Check if the array is having  data
-        2- Call the Encrypt class to encrypt the data
-        3- Return the array with encrypted details
-    B) Decrypt data passed by an Array by following these steps:
-        1- Check if the array is having  data
-        2- Call the Decrypt class to encrypt the data
-        3- Return the array with Decrypted details
+    A) Encrypt string data passed by the caller and return encrypted String data 
+    B) Encrypt string data passed by the caller and return decrypted String data
 */
 public class EncryptDecrypt {
     private static SecretKeySpec secretKey;
@@ -34,16 +28,12 @@ public String encrypt(String strToEncrypt,String strKey) throws Exception{
 	}
     }
 
-    public String decrypt(String strEncrypted,String strKey) throws Exception{
+    public String decrypt(String strToDecrypted,String strKey) throws Exception{
         try {
             setKey(strKey);
-            //SecretKeySpec skeyspec=new SecretKeySpec(strKey.getBytes("UTF-8"),"AES");
             Cipher cipher=Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(strEncrypted)));
-            //byte[] decrypted = cipher.doFinal(strEncrypted.getBytes());
-            //strData=new String(decrypted);
-            
+            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypted)));
         } catch (Exception e) {
             throw new Exception(e);
         }
